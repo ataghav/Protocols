@@ -1,0 +1,48 @@
+<script>
+
+    var ajax = new XMLHttpRequest(); // new ActiveXObject("Microsoft.XMLHTTP");
+
+    /*
+    try {
+		// Opera 8.0+, Firefox, Safari
+		ajaxRequest = new XMLHttpRequest();
+	} catch (e){
+		// Internet Explorer Browsers
+		try {
+			ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+		} catch (e) {
+			try{
+				ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+			} catch (e){
+				// Something went wrong
+				alert("Your browser does not support AJAX!");
+				return false;
+			}
+		}
+	}
+     */
+
+    function loadBalance() {
+        if (ajax.readyState == 4 || ajax.readyState == 0) {
+                ajax.open("GET", "FindAccountServletAjax?number=" + bank.number.value + "&find=Find", true);
+            ajax.onreadystatechange = f;
+            ajax.send();
+        }
+    }
+
+    function f() {
+        if (ajax.readyState == 4) {
+            var s = ajax.responseText;
+            bank.balance.value = s;
+        }
+    }
+
+</script>
+
+<html>
+<form name="bank">
+    Number: <input type="text" name="number">
+    Balance: <input type="text" name="balance">
+    <input type="button" value="Ajax Fetch" OnClick="loadBalance()">
+</form>
+</html>
